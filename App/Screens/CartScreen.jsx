@@ -1,19 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { createContext, useState } from 'react';
 
-const CartScreen = () => (
-  <SafeAreaView style={styles.container}>
-    <View>
-      <Text></Text>
-    </View>
-  </SafeAreaView>
-);
+export const CartContext = createContext();
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-});
+export const CartProvider = ({ children }) => {
+    const [cart, setCart] = useState([]);
 
-export default CartScreen;
+    const addToCart = (product) => {
+        setCart([...cart, product]);
+    };
+
+    const removeFromCart = (productId) => {
+        setCart(cart.filter(item => item.id !== productId));
+    };
+
+    return (
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+            {children}
+        </CartContext.Provider>
+    );
+};

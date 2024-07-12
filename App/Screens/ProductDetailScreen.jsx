@@ -15,5 +15,5 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
-
+import { CartContext } from '../Components/CartContext';
 export default ProductDetailScreen;
