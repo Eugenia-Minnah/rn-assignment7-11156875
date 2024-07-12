@@ -4,8 +4,24 @@ import { CartContext } from '../Components/CartContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function ProductDetailScreen({ route, navigation }) {
-    const { product } = route.params; // Get the product passed from HomeScreen
+    const product = route?.params?.product;
     const { addToCart } = useContext(CartContext);
+    if (!product) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.header}>
+                    <Icon style={{ marginHorizontal: 10 }} name='arrow-left' size={30} onPress={() => navigation.goBack()} />
+                    <Text style={styles.headerTitle}>Product Details</Text>
+                </View>
+                <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>No product details available.</Text>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Text style={styles.goBackText}>Go Back</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -19,6 +35,11 @@ export default function ProductDetailScreen({ route, navigation }) {
                 <Text style={styles.productDescription}>{product.description}</Text>
                 <Text style={styles.productPrice}>${product.price}</Text>
             </ScrollView>
+            <TouchableOpacity style={styles.addToCartButton} onPress={() => addToCart(product)}>
+                <Icon name="plus" size={22} color="white" style={styles.buttonIcon} />
+                <Text style={styles.buttonText}>ADD TO CART</Text>
+                <Icon name="heart" size={22} color="white" style={styles.buttonIcon2} />
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
@@ -64,5 +85,43 @@ const styles = StyleSheet.create({
         color: '#ff6600',
         marginBottom: 16,
     },
-    
+    addToCartButton: {
+        flexDirection: 'row',
+        backgroundColor: 'black',
+        padding: 12,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 22,
+        marginHorizontal: 10,
+        left:10,
+    },
+    buttonIcon: {
+        marginHorizontal: 5,
+        left:10,
+    },
+    buttonIcon2: {
+        marginHorizontal: 5,
+        left:150,
+    },
+    errorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    errorText: {
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 20,
+        color: 'red',
+    },
+    goBackText: {
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 20,
+        color: 'blue',
+    },
 });
