@@ -32,9 +32,9 @@ return (
         <TouchableOpacity>
             <Icon style={{marginLeft:35}} name='search' size={30} />
         </TouchableOpacity>
-        <TouchableOpacity>
-        <Icon style={{marginHorizontal:10}} name='shopping-bag' size={30}/>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+        <Icon style={{ marginHorizontal: 10 }} name='shopping-bag' size={30} />
+    </TouchableOpacity>
 
     </View>
     <View style={styles.story}>
